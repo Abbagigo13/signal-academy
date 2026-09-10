@@ -1,0 +1,357 @@
+/* src/styles/globals.css */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin '@tailwindcss/typography';
+
+/* ================================================================
+   Tailwind v4 theme registration — required so Tailwind generates
+   utility classes like bg-signal, text-signal-bright, from-brand, etc.
+   ================================================================ */
+@theme {
+  --color-brand: #191F61;
+  --color-brand-soft: #232A73;
+  --color-signal: #1DA2B4;
+  --color-signal-bright: #35D0E2;
+  --color-surface: #131B2E;
+  --color-surface-raised: #18223A;
+  --color-background: #0A0E1A;
+  --color-foreground: #FFFFFF;
+  --color-muted-foreground: #8899BB;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(
+      --radix-accordion-content-height,
+      var(--accordion-panel-height, auto)
+    );
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(
+      --radix-accordion-content-height,
+      var(--accordion-panel-height, auto)
+    );
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+:root {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+    --font-sans: var(--font-app-sans, ui-sans-serif, system-ui, sans-serif);
+    --font-mono: var(--font-app-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    --font-heading: var(--font-app-heading, var(--font-app-sans, ui-sans-serif, system-ui, sans-serif));
+
+    /* Signal Academy brand palette */
+    --color-brand: #191F61;
+    --color-brand-soft: #232A73;
+    --color-signal: #1DA2B4;
+    --color-signal-bright: #35D0E2;
+    --color-surface: #131B2E;
+    --color-surface-raised: #18223A;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Dark-only theme. Bitget-inspired: near-black blue base, deep brand blue, turquoise accent. */
+:root {
+    --background: #0A0E1A;
+    --foreground: #FFFFFF;
+    --card: #131B2E;
+    --card-foreground: #FFFFFF;
+    --popover: #131B2E;
+    --popover-foreground: #FFFFFF;
+    --primary: #1DA2B4;
+    --primary-foreground: #04121A;
+    --secondary: #191F61;
+    --secondary-foreground: #FFFFFF;
+    --muted: #18223A;
+    --muted-foreground: #8899BB;
+    --accent: #1DA2B4;
+    --accent-foreground: #04121A;
+    --destructive: oklch(0.62 0.21 25);
+    --border: rgba(136, 153, 187, 0.16);
+    --input: rgba(136, 153, 187, 0.22);
+    --ring: #1DA2B4;
+    --chart-1: #1DA2B4;
+    --chart-2: #35D0E2;
+    --chart-3: #4C63C9;
+    --chart-4: #191F61;
+    --chart-5: #8899BB;
+    --radius: 0.75rem;
+    --sidebar: #131B2E;
+    --sidebar-foreground: #FFFFFF;
+    --sidebar-primary: #1DA2B4;
+    --sidebar-primary-foreground: #04121A;
+    --sidebar-accent: #18223A;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: rgba(136, 153, 187, 0.16);
+    --sidebar-ring: #1DA2B4;
+}
+
+@layer base {
+    * {
+        border-color: var(--border);
+        outline-color: rgba(29, 162, 180, 0.5);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    html {
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Signal Academy — landing page motion + surface treatments
+   --------------------------------------------------------------------------- */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        color-scheme: dark;
+    }
+
+    /* Fixed header clearance for in-page anchor links */
+    section[id] {
+        scroll-margin-top: 5.5rem;
+    }
+
+    ::selection {
+        background-color: rgba(29, 162, 180, 0.32);
+        color: #ffffff;
+    }
+}
+
+/* Glassmorphism card surface */
+@layer utilities {
+    .glass {
+        background: linear-gradient(
+            160deg,
+            rgba(24, 34, 58, 0.78) 0%,
+            rgba(19, 27, 46, 0.55) 100%
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(136, 153, 187, 0.16);
+    }
+
+    /* Turquoise → blue gradient applied to text */
+    .text-gradient-signal {
+        background-image: linear-gradient(100deg, #35d0e2 0%, #1da2b4 45%, #4c63c9 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+/* Scroll reveal — toggled by the Reveal component via data-visible */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+}
+
+/* Above-the-fold staggered entrance (no observer needed) */
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.rise-in {
+    animation: rise-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Slow vertical drift for the hero signal card */
+@keyframes float-y {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.float-y {
+    animation: float-y 7s ease-in-out infinite;
+}
+
+/* Live indicator halo */
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(53, 208, 226, 0.55);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(53, 208, 226, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(53, 208, 226, 0);
+    }
+}
+
+.pulse-ring {
+    animation: pulse-ring 2.2s ease-out infinite;
+}
+
+/* Light travelling along the "how it works" connector */
+@keyframes line-flow {
+    from {
+        background-position: 0% 0;
+    }
+    to {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes line-flow-y {
+    from {
+        background-position: 0 0%;
+    }
+    to {
+        background-position: 0 200%;
+    }
+}
+
+.line-flow {
+    background-image: linear-gradient(
+        90deg,
+        rgba(136, 153, 187, 0.12) 0%,
+        rgba(29, 162, 180, 0.75) 35%,
+        rgba(53, 208, 226, 0.95) 50%,
+        rgba(29, 162, 180, 0.75) 65%,
+        rgba(136, 153, 187, 0.12) 100%
+    );
+    background-size: 200% 100%;
+    animation: line-flow 4.5s linear infinite;
+}
+
+.line-flow-y {
+    background-image: linear-gradient(
+        180deg,
+        rgba(136, 153, 187, 0.12) 0%,
+        rgba(29, 162, 180, 0.75) 35%,
+        rgba(53, 208, 226, 0.95) 50%,
+        rgba(29, 162, 180, 0.75) 65%,
+        rgba(136, 153, 187, 0.12) 100%
+    );
+    background-size: 100% 200%;
+    animation: line-flow-y 4.5s linear infinite;
+}
+
+/* Ambient aurora blobs behind sections */
+@keyframes aurora-drift {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(4%, -6%, 0) scale(1.12);
+    }
+}
+
+.aurora-drift {
+    animation: aurora-drift 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .rise-in,
+    .float-y,
+    .pulse-ring,
+    .line-flow,
+    .line-flow-y,
+    .aurora-drift {
+        animation: none;
+    }
+}
