@@ -1,11 +1,9 @@
 // src/lib/storage.ts
-export interface Lesson {
-  id: number;
-  title: string;
-  desc: string;
-  icon: string;
-  reward: number;
+
+export interface LessonProgress {
   completed: boolean;
+  passed: boolean;
+  score: number;
 }
 
 export interface Trade {
@@ -17,26 +15,27 @@ export interface Trade {
   timestamp: string;
 }
 
-export function getLessons(): Lesson[] {
-  if (typeof window === 'undefined') return [];
-  const stored = localStorage.getItem('lessons');
-  if (stored) return JSON.parse(stored);
-
-  const defaultLessons: Lesson[] = [
-{ id: 1, title: 'What is RSI?', desc: 'Understand the Relative Strength Index', icon: 'chart-line', reward: 10, completed: false },
-{ id: 2, title: 'Reading MACD Crosses', desc: 'Spot momentum shifts with MACD', icon: 'chart-candlestick', reward: 15, completed: false },
-{ id: 3, title: 'Fear & Greed Index', desc: 'Gauge market psychology', icon: 'smile', reward: 10, completed: false },
-{ id: 4, title: 'Support & Resistance', desc: 'Find key price levels', icon: 'layers', reward: 20, completed: false },
-{ id: 5, title: 'Risk Management', desc: 'Protect your capital', icon: 'shield', reward: 25, completed: false },
-  ];
-  localStorage.setItem('lessons', JSON.stringify(defaultLessons));
-  return defaultLessons;
+// ============================================
+// Lesson progress
+// ============================================
+export function getLessonProgress(): Record<string, LessonProgress> {
+  if (typeof window === 'undefined') return {};
+  return JSON.parse(localStorage.getItem('lessonProgress') || '{}');
 }
 
-export function saveLessons(lessons: Lesson[]) {
-  localStorage.setItem('lessons', JSON.stringify(lessons));
+export function saveLessonProgress(
+  id: number,
+  passed: boolean,
+  score: number
+) {
+  const progress = getLessonProgress();
+  progress[id] = { completed: true, passed, score };
+  localStorage.setItem('lessonProgress', JSON.stringify(progress));
 }
 
+// ============================================
+// Points
+// ============================================
 export function getPoints(): number {
   if (typeof window === 'undefined') return 0;
   return parseInt(localStorage.getItem('points') || '0');
@@ -47,6 +46,9 @@ export function addPoints(amount: number) {
   localStorage.setItem('points', String(current + amount));
 }
 
+// ============================================
+// Trades
+// ============================================
 export function getTrades(): Trade[] {
   if (typeof window === 'undefined') return [];
   return JSON.parse(localStorage.getItem('trades') || '[]');
