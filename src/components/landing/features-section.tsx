@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from 'react'
 
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 import { Reveal } from '@/components/landing/reveal'
@@ -33,29 +34,31 @@ export const FeaturesSection: FC = (): ReactNode => {
                     {features.map((feature, index) => (
                         <li key={feature.id}>
                             <Reveal delay={index * 100} className='h-full'>
-                                <article className='glass group relative flex h-full flex-col overflow-hidden rounded-3xl p-7 transition-all duration-500 ease-out hover:-translate-y-2 hover:border-signal/45 hover:shadow-[0_30px_70px_-40px_rgba(29,162,180,0.9)]'>
-                                    <div
-                                        aria-hidden='true'
-                                        className='absolute inset-x-0 -top-24 h-40 bg-[radial-gradient(circle_at_50%_100%,rgba(29,162,180,0.28),transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100'
-                                    />
+                                <Link href={feature.id === 'ai-tutor' ? '/dashboard?view=tutor' : feature.id === 'learn-to-earn' ? '/dashboard?view=learn' : '/dashboard?view=overview'}>
+                                    <article className='glass group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl p-7 transition-all duration-500 ease-out hover:-translate-y-2 hover:border-signal/45 hover:shadow-[0_30px_70px_-40px_rgba(29,162,180,0.9)]'>
+                                        <div
+                                            aria-hidden='true'
+                                            className='absolute inset-x-0 -top-24 h-40 bg-[radial-gradient(circle_at_50%_100%,rgba(29,162,180,0.28),transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100'
+                                        />
 
-                                    <span className='relative flex size-14 items-center justify-center rounded-2xl border border-signal/25 bg-gradient-to-br from-signal/20 to-brand/30 text-signal-bright transition-transform duration-500 group-hover:scale-110'>
-                                        <feature.icon className='size-6' strokeWidth={2} />
-                                    </span>
+                                        <span className='relative flex size-14 items-center justify-center rounded-2xl border border-signal/25 bg-gradient-to-br from-signal/20 to-brand/30 text-signal-bright transition-transform duration-500 group-hover:scale-110'>
+                                            <feature.icon className='size-6' strokeWidth={2} />
+                                        </span>
 
-                                    <h3 className='relative mt-6 text-xl font-semibold text-white'>
-                                        {feature.title}
-                                    </h3>
+                                        <h3 className='relative mt-6 text-xl font-semibold text-white'>
+                                            {feature.title}
+                                        </h3>
 
-                                    <p className='relative mt-3 flex-1 text-sm leading-relaxed text-muted-foreground'>
-                                        {feature.description}
-                                    </p>
+                                        <p className='relative mt-3 flex-1 text-sm leading-relaxed text-muted-foreground'>
+                                            {feature.description}
+                                        </p>
 
-                                    <span className='relative mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-signal-bright'>
-                                        {feature.tag}
-                                        <ArrowRight className='size-4 transition-transform duration-300 group-hover:translate-x-1' />
-                                    </span>
-                                </article>
+                                        <span className='relative mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-signal-bright'>
+                                            {feature.tag}
+                                            <ArrowRight className='size-4 transition-transform duration-300 group-hover:translate-x-1' />
+                                        </span>
+                                    </article>
+                                </Link>
                             </Reveal>
                         </li>
                     ))}

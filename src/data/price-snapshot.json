@@ -1,0 +1,52 @@
+{
+    "RMETAUSDT":  {
+                      "price":  618.47,
+                      "ticker":  "META",
+                      "volume24h":  15200000,
+                      "change24h":  1.03,
+                      "source":  "yahoo-snapshot"
+                  },
+    "SOLUSDT":  {
+                    "price":  101.96,
+                    "volume24h":  3498509966,
+                    "change24h":  0.51
+                },
+    "BTCUSDT":  {
+                    "price":  77284.56,
+                    "volume24h":  25235036256,
+                    "change24h":  -0.46
+                },
+    "RMSFTUSDT":  {
+                      "price":  512.18,
+                      "ticker":  "MSFT",
+                      "volume24h":  18330000,
+                      "change24h":  -0.21,
+                      "source":  "yahoo-snapshot"
+                  },
+    "RTSLAUSDT":  {
+                      "price":  365.44,
+                      "ticker":  "TSLA",
+                      "volume24h":  29922750,
+                      "change24h":  0.52,
+                      "source":  "yahoo-snapshot"
+                  },
+    "RAAPLUSDT":  {
+                      "price":  248.32,
+                      "ticker":  "AAPL",
+                      "volume24h":  28100000,
+                      "change24h":  0.34,
+                      "source":  "yahoo-snapshot"
+                  },
+    "ETHUSDT":  {
+                    "price":  2538.56,
+                    "volume24h":  20813764105,
+                    "change24h":  1.58
+                },
+    "RNVDAUSDT":  {
+                      "price":  187.65,
+                      "ticker":  "NVDA",
+                      "volume24h":  41235000,
+                      "change24h":  -0.88,
+                      "source":  "yahoo-snapshot"
+                  }
+}
