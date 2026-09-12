@@ -39,7 +39,6 @@ export default function ComparePanel() {
     setResult('');
 
     try {
-      // Fetch both assets in parallel
       const [dataA, dataB] = await Promise.all([
         getMarketInsights(assetA),
         getMarketInsights(assetB),
@@ -51,7 +50,6 @@ export default function ComparePanel() {
         return;
       }
 
-      // Call AI to compare
       const apiKey = process.env.NEXT_PUBLIC_QWEN_API_KEY;
       if (!apiKey) {
         setError('Qwen API key missing.');
@@ -114,20 +112,22 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
   return (
     <div className="bg-[#131B2E] border border-white/5 rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <GitCompare className="w-5 h-5 text-[#1DA2B4]" />
-          <h2 className="font-bold">Cross-Asset Comparison</h2>
+      <div className="flex items-center justify-between px-5 lg:px-6 py-4 lg:py-5 border-b border-white/5">
+        <div className="flex items-center gap-3 min-w-0">
+          <GitCompare className="w-5 h-5 text-[#1DA2B4] flex-shrink-0" />
+          <h2 className="font-bold text-base lg:text-lg truncate">
+            Cross-Asset Comparison
+          </h2>
         </div>
-        <span className="px-3 py-1 bg-[#1DA2B4]/15 text-[#1DA2B4] rounded-full text-[11px] font-semibold">
+        <span className="px-2.5 lg:px-3 py-1 bg-[#1DA2B4]/15 text-[#1DA2B4] rounded-full text-[10px] lg:text-[11px] font-semibold flex-shrink-0">
           AI-Powered
         </span>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         {/* Asset Selectors */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-end mb-5">
-          <div>
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 sm:gap-4 items-stretch sm:items-end mb-5">
+          <div className="min-w-0">
             <label className="text-[11px] uppercase tracking-wider text-[#8899BB] font-semibold block mb-2">
               Asset A
             </label>
@@ -138,16 +138,30 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
                 className="w-full appearance-none bg-[#1A2340] border border-white/5 rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-white outline-none focus:border-[#1DA2B4] cursor-pointer"
                 style={{ colorScheme: 'dark' }}
               >
-                <optgroup label="🪙 Crypto" className="bg-[#1A2340] text-[#8899BB]">
+                <optgroup
+                  label="🪙 Crypto"
+                  className="bg-[#1A2340] text-[#8899BB]"
+                >
                   {ASSETS.filter((a) => a.type === 'crypto').map((a) => (
-                    <option key={a.symbol} value={a.symbol} className="bg-[#1A2340] text-white">
+                    <option
+                      key={a.symbol}
+                      value={a.symbol}
+                      className="bg-[#1A2340] text-white"
+                    >
                       {a.label}
                     </option>
                   ))}
                 </optgroup>
-                <optgroup label="📈 Tokenized Stocks" className="bg-[#1A2340] text-[#8899BB]">
+                <optgroup
+                  label="📈 Tokenized Stocks"
+                  className="bg-[#1A2340] text-[#8899BB]"
+                >
                   {ASSETS.filter((a) => a.type === 'stock').map((a) => (
-                    <option key={a.symbol} value={a.symbol} className="bg-[#1A2340] text-white">
+                    <option
+                      key={a.symbol}
+                      value={a.symbol}
+                      className="bg-[#1A2340] text-white"
+                    >
                       {a.label}
                     </option>
                   ))}
@@ -157,11 +171,11 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
             </div>
           </div>
 
-          <div className="flex justify-center pb-3">
+          <div className="flex justify-center sm:pb-3">
             <span className="text-[#8899BB] font-bold text-sm">VS</span>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <label className="text-[11px] uppercase tracking-wider text-[#8899BB] font-semibold block mb-2">
               Asset B
             </label>
@@ -172,16 +186,30 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
                 className="w-full appearance-none bg-[#1A2340] border border-white/5 rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-white outline-none focus:border-[#1DA2B4] cursor-pointer"
                 style={{ colorScheme: 'dark' }}
               >
-                <optgroup label="🪙 Crypto" className="bg-[#1A2340] text-[#8899BB]">
+                <optgroup
+                  label="🪙 Crypto"
+                  className="bg-[#1A2340] text-[#8899BB]"
+                >
                   {ASSETS.filter((a) => a.type === 'crypto').map((a) => (
-                    <option key={a.symbol} value={a.symbol} className="bg-[#1A2340] text-white">
+                    <option
+                      key={a.symbol}
+                      value={a.symbol}
+                      className="bg-[#1A2340] text-white"
+                    >
                       {a.label}
                     </option>
                   ))}
                 </optgroup>
-                <optgroup label="📈 Tokenized Stocks" className="bg-[#1A2340] text-[#8899BB]">
+                <optgroup
+                  label="📈 Tokenized Stocks"
+                  className="bg-[#1A2340] text-[#8899BB]"
+                >
                   {ASSETS.filter((a) => a.type === 'stock').map((a) => (
-                    <option key={a.symbol} value={a.symbol} className="bg-[#1A2340] text-white">
+                    <option
+                      key={a.symbol}
+                      value={a.symbol}
+                      className="bg-[#1A2340] text-white"
+                    >
                       {a.label}
                     </option>
                   ))}
@@ -196,7 +224,7 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
         <button
           onClick={handleCompare}
           disabled={loading}
-          className="w-full px-6 py-3 rounded-xl bg-gradient-to-br from-[#1DA2B4] to-[#148a9a] text-white font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#1DA2B4]/30 transition-all disabled:opacity-50 disabled:hover:translate-y-0 flex items-center justify-center gap-2"
+          className="w-full px-5 lg:px-6 py-3 rounded-xl bg-gradient-to-br from-[#1DA2B4] to-[#148a9a] text-white font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#1DA2B4]/30 transition-all disabled:opacity-50 disabled:hover:translate-y-0 flex items-center justify-center gap-2 text-sm lg:text-base"
         >
           <Sparkles className="w-4 h-4" />
           {loading ? 'AI is comparing...' : 'Compare with AI'}
@@ -211,9 +239,9 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
 
         {/* Loading */}
         {loading && (
-          <div className="mt-5 p-5 bg-[#1A2340] rounded-xl">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-5 h-5 border-2 border-[#1DA2B4]/30 border-t-[#1DA2B4] rounded-full animate-spin" />
+          <div className="mt-5 p-4 lg:p-5 bg-[#1A2340] rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 border-2 border-[#1DA2B4]/30 border-t-[#1DA2B4] rounded-full animate-spin flex-shrink-0" />
               <span className="text-sm text-[#8899BB]">
                 Analyzing {assetA} vs {assetB}...
               </span>
@@ -223,12 +251,14 @@ Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
 
         {/* Result */}
         {result && !loading && (
-          <div className="mt-5 p-6 bg-[#1A2340] rounded-xl">
-            <div className="flex items-center gap-2 text-[#1DA2B4] font-semibold mb-4">
-              <Sparkles className="w-4 h-4" />
-              AI Analysis · {assetA} vs {assetB}
+          <div className="mt-5 p-4 lg:p-6 bg-[#1A2340] rounded-xl overflow-hidden">
+            <div className="flex items-center gap-2 text-[#1DA2B4] font-semibold mb-4 text-sm lg:text-base">
+              <Sparkles className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">
+                AI Analysis · {assetA} vs {assetB}
+              </span>
             </div>
-            <div className="prose prose-invert prose-sm max-w-none prose-strong:text-[#1DA2B4] prose-p:text-[#8899BB] prose-li:text-[#8899BB] prose-headings:text-white prose-headings:text-sm prose-headings:font-bold prose-headings:mt-4 prose-headings:mb-2">
+            <div className="prose prose-invert prose-sm max-w-none prose-strong:text-[#1DA2B4] prose-p:text-[#8899BB] prose-li:text-[#8899BB] prose-headings:text-white prose-headings:text-sm prose-headings:font-bold prose-headings:mt-4 prose-headings:mb-2 prose-p:my-2">
               <ReactMarkdown>{result}</ReactMarkdown>
             </div>
           </div>
