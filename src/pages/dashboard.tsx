@@ -40,13 +40,13 @@ export default function Dashboard() {
   const router = useRouter();
   const [view, setView] = useState<View>('overview');
   const [symbol, setSymbol] = useState<string>('BTCUSDT');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { insights, aiSummary, loading, error, refresh, source } =
     useMarketData(symbol);
 
   // Sync view from URL query (?view=tutor, ?view=learn, etc.)
   useEffect(() => {
     if (!router.isReady) return;
-
     const queryView = router.query.view;
     if (typeof queryView === 'string' && VALID_VIEWS.includes(queryView as View)) {
       setView(queryView as View);
@@ -63,9 +63,14 @@ export default function Dashboard() {
       </Head>
 
       <div className="flex min-h-screen bg-[#0A0E1A] text-white">
-        <Sidebar currentView={view} onNavigate={setView} />
+        <Sidebar
+          currentView={view}
+          onNavigate={setView}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
 
-        <main className="flex-1 ml-[260px] px-8 pb-8">
+        <main className="flex-1 lg:ml-[260px] px-4 sm:px-6 lg:px-8 pb-8 max-w-full overflow-x-hidden">
           <Topbar
             title={
               {
@@ -80,37 +85,36 @@ export default function Dashboard() {
             loading={loading}
             onRefresh={refresh}
             source={source}
+            onOpenSidebar={() => setSidebarOpen(true)}
           />
 
           {/* Overview */}
           {view === 'overview' && (
-            <div className="space-y-6">
+            <div className="space-y-5 lg:space-y-6">
               {/* Asset Switcher */}
-              <div className="flex items-center justify-between flex-wrap gap-3">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="min-w-0">
                   <h2 className="text-lg font-bold flex items-center gap-2">
                     {isStock ? (
                       <TrendingUp className="w-4 h-4 text-[#1DA2B4]" />
                     ) : (
                       <Bitcoin className="w-4 h-4 text-[#1DA2B4]" />
                     )}
-                    {currentAsset.label}
+                    <span className="truncate">{currentAsset.label}</span>
                   </h2>
                   <p className="text-xs text-[#8899BB] mt-0.5">
                     {isStock ? 'Tokenized US Stock' : 'Cryptocurrency'}
                     {source === 'mock' && (
-                      <span className="ml-2 text-yellow-500">
-                        · mock data
-                      </span>
+                      <span className="ml-2 text-yellow-500">· mock data</span>
                     )}
                   </p>
                 </div>
 
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                   <select
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value)}
-                    className="appearance-none bg-[#131B2E] border border-white/10 hover:border-[#1DA2B4]/50 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold text-white outline-none focus:border-[#1DA2B4] transition-all cursor-pointer"
+                    className="w-full sm:w-auto appearance-none bg-[#131B2E] border border-white/10 hover:border-[#1DA2B4]/50 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold text-white outline-none focus:border-[#1DA2B4] transition-all cursor-pointer"
                     style={{ colorScheme: 'dark' }}
                   >
                     <optgroup
@@ -146,8 +150,8 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Signal Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* Signal Cards — 2 cols on mobile, 4 on desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
                 <SignalCard
                   icon="fa-globe"
                   label="Macro"
