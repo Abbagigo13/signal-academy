@@ -1,5 +1,7 @@
 // src/components/dashboard/Sidebar.tsx
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
+import { getBalance, onBalanceChange } from '@/lib/storage';
 
 interface Props {
   currentView: string;
@@ -26,6 +28,13 @@ export default function Sidebar({
     onNavigate(id);
     onClose(); // Close sidebar on mobile after navigating
   };
+
+  const [balance, setBalance] = useState(3000);
+
+  useEffect(() => {
+    setBalance(getBalance());
+    return onBalanceChange(() => setBalance(getBalance()));
+  }, []);
 
   return (
     <>
@@ -85,8 +94,12 @@ export default function Sidebar({
             <div className="text-[11px] text-[#8899BB] uppercase tracking-wider">
               Paper Balance
             </div>
-            <div className="text-2xl font-extrabold text-[#1DA2B4] mt-1">
-              3,000.00
+            <div
+              className={`text-2xl font-extrabold mt-1 ${
+                balance >= 3000 ? 'text-[#1DA2B4]' : 'text-[#FF6B6B]'
+              }`}
+            >
+              {balance.toFixed(2)}
             </div>
             <div className="text-xs text-[#8899BB]">SUSDT</div>
           </div>
