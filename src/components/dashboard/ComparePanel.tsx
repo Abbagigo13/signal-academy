@@ -68,7 +68,6 @@ export default function ComparePanel() {
       } else {
         setError('AI returned an unexpected response.');
       }
-      }
     } catch (err) {
       console.error(err);
       setError('Something went wrong. Try again.');
