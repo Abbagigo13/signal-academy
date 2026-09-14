@@ -41,7 +41,7 @@ export default function ChatPanel({
   };
 
   return (
-    <div className="bg-[#131B2E] border border-white/5 rounded-2xl flex flex-col h-[calc(100vh-200px)] overflow-hidden">
+        <div className="bg-[#131B2E] border border-white/5 rounded-2xl flex flex-col h-[calc(100dvh-200px)] overflow-hidden">
       <div ref={scrollRef} className="flex-1 p-6 overflow-y-auto space-y-4">
         {messages.map((msg, i) => (
           <div
