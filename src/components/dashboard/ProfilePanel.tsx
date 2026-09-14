@@ -10,7 +10,7 @@ import {
   DollarSign,
   Activity,
 } from 'lucide-react';
-import { getLessons, getPoints, getTrades, Lesson, Trade } from '@/lib/storage';
+import { getLessons, getPoints, getTrades, getBalance, onBalanceChange, Lesson, Trade } from '@/lib/storage';
 
 interface Badge {
   id: string;
@@ -24,11 +24,17 @@ export default function ProfilePanel() {
   const [points, setPoints] = useState(0);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [trades, setTrades] = useState<Trade[]>([]);
+  const [balance, setBalance] = useState(3000);
 
   useEffect(() => {
     setPoints(getPoints());
     setLessons(getLessons());
     setTrades(getTrades());
+    setBalance(getBalance());
+    return onBalanceChange(() => {
+      setBalance(getBalance());
+      setTrades(getTrades());
+    });
   }, []);
 
   const completedLessons = lessons.filter((l) => l.completed).length;
@@ -124,7 +130,26 @@ export default function ProfilePanel() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-[#131B2E] border border-white/5 rounded-2xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[#1DA2B4]/15 text-[#1DA2B4] flex items-center justify-center">
+              <DollarSign className="w-5 h-5" />
+            </div>
+            <div className="text-[11px] uppercase tracking-wider text-[#8899BB] font-semibold">
+              Balance
+            </div>
+          </div>
+          <div
+            className={`text-3xl font-extrabold ${
+              balance >= 3000 ? 'text-[#1DA2B4]' : 'text-[#FF6B6B]'
+            }`}
+          >
+            {balance.toFixed(2)}
+          </div>
+          <div className="text-xs text-[#8899BB] mt-2">SUSDT paper balance</div>
+        </div>
+
         <div className="bg-[#131B2E] border border-white/5 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-[#1DA2B4]/15 text-[#1DA2B4] flex items-center justify-center">
@@ -266,8 +291,22 @@ export default function ProfilePanel() {
                         </div>
                       </div>
                     </div>
-                    <div className="text-sm font-bold text-[#1DA2B4]">
-                      {trade.size} SUSDT
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-[#1DA2B4]">
+                        {trade.size} SUSDT
+                      </div>
+                      {typeof trade.pnl === 'number' ? (
+                        <div
+                          className={`text-xs font-semibold ${
+                            trade.pnl >= 0 ? 'text-[#00D4AA]' : 'text-[#FF6B6B]'
+                          }`}
+                        >
+                          {trade.pnl >= 0 ? '+' : ''}
+                          {trade.pnl.toFixed(2)} SUSDT
+                        </div>
+                      ) : (
+                        <div className="text-xs text-[#8899BB]">unresolved</div>
+                      )}
                     </div>
                   </div>
                 ))}
