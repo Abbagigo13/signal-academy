@@ -94,7 +94,7 @@ NEXT_PUBLIC_PAPER_TRADING=true
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open https://signal-academy.vercel.app
 
 ---
 
