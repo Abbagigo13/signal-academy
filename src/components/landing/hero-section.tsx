@@ -14,7 +14,7 @@ export const HeroSection: FC = (): ReactNode => {
     return (
         <section
             id='hero'
-            className='relative flex min-h-screen items-center overflow-hidden px-5 pt-28 pb-20 sm:px-8 lg:pt-32'
+            className='relative flex items-start overflow-hidden px-5 pt-16 pb-20 sm:px-8 lg:min-h-screen lg:items-center lg:pt-32'
         >
             <div
                 aria-hidden='true'
