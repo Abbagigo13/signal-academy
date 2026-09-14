@@ -150,7 +150,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Signal Cards — 2 cols on mobile, 4 on desktop */}
+                            {/* Signal Cards — 2 cols on mobile, 4 on desktop */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
                 <SignalCard
                   icon="fa-globe"
@@ -158,6 +158,13 @@ export default function Dashboard() {
                   value={insights?.macro?.trend || 'Neutral'}
                   sub={insights?.macro?.summary || 'Loading macro data...'}
                   loading={loading}
+                  trend={
+                    insights?.macro?.trend === 'Risk-On'
+                      ? 'up'
+                      : insights?.macro?.trend === 'Risk-Off'
+                      ? 'down'
+                      : 'neutral'
+                  }
                 />
                 <SignalCard
                   icon="fa-chart-simple"
@@ -197,6 +204,13 @@ export default function Dashboard() {
                   value={insights?.onChain?.signal || 'Neutral'}
                   sub={insights?.onChain?.summary || 'Tracking volume...'}
                   loading={loading}
+                  trend={
+                    insights?.onChain?.signal === 'Bullish'
+                      ? 'up'
+                      : insights?.onChain?.signal === 'Bearish'
+                      ? 'down'
+                      : 'neutral'
+                  }
                 />
               </div>
 
