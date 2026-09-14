@@ -64,6 +64,11 @@ export interface Trade {
   size: number;
   price: number;
   timestamp: string;
+  entryPrice?: number;
+  exitPrice?: number;
+  pnl?: number;
+  pnlPercent?: number;
+  balanceAfter?: number;
 }
 
 export function getTrades(): Trade[] {
@@ -75,4 +80,44 @@ export function saveTrade(trade: Trade) {
   const trades = getTrades();
   trades.push(trade);
   localStorage.setItem('trades', JSON.stringify(trades));
+}
+
+// ============================================
+// Paper trading balance
+// ============================================
+export const STARTING_BALANCE = 3000;
+const BALANCE_EVENT = 'signal-academy:balance-updated';
+
+export function getBalance(): number {
+  if (typeof window === 'undefined') return STARTING_BALANCE;
+  const stored = localStorage.getItem('balance');
+  if (stored === null) {
+    localStorage.setItem('balance', String(STARTING_BALANCE));
+    return STARTING_BALANCE;
+  }
+  return parseFloat(stored);
+}
+
+export function setBalance(amount: number) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('balance', String(amount));
+  window.dispatchEvent(new Event(BALANCE_EVENT));
+}
+
+/** Adds `delta` (positive or negative) to the stored balance and returns the new value. */
+export function adjustBalance(delta: number): number {
+  const next = getBalance() + delta;
+  setBalance(next);
+  return next;
+}
+
+/** Subscribe to balance changes made anywhere in the app (any tab/component). Returns an unsubscribe fn. */
+export function onBalanceChange(callback: () => void): () => void {
+  if (typeof window === 'undefined') return () => {};
+  window.addEventListener(BALANCE_EVENT, callback);
+  window.addEventListener('storage', callback); // cross-tab
+  return () => {
+    window.removeEventListener(BALANCE_EVENT, callback);
+    window.removeEventListener('storage', callback);
+  };
 }
