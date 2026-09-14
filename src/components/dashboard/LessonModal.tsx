@@ -51,47 +51,27 @@ export default function LessonModal({ lesson, onClose, onComplete }: Props) {
   }, [lesson.id]);
 
   const callQwen = async (history: ChatMessage[]): Promise<string> => {
-    const apiKey = process.env.NEXT_PUBLIC_QWEN_API_KEY;
-    if (!apiKey) return '⚠️ Qwen API key missing.';
-
-    const systemPrompt = `You are a friendly trading tutor teaching a lesson called "${lesson.title}".
-
-Lesson sections (your source of truth):
-${lesson.sections.map((s) => `- ${s.heading}: ${s.body}`).join('\n')}
-
-Teach interactively:
-- Break the concept into short, clear messages (2-3 sentences each)
-- Use analogies and real examples
-- Encourage questions
-- When you've covered all sections, tell the user they're ready for the quiz
-
-Never reveal quiz answers. Keep replies under 100 words. Use markdown.`;
-
     try {
-      const res = await fetch(
-        'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'qwen-plus',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              ...history.map((m) => ({
-                role: m.role === 'ai' ? 'assistant' : 'user',
-                content: m.text,
-              })),
-            ],
-          }),
-        }
-      );
+      const res = await fetch('/api/lesson-teach', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lessonTitle: lesson.title,
+          sections: lesson.sections,
+          history,
+        }),
+      });
+
+      if (res.status === 429) {
+        return '⚠️ Too many requests. Please wait a moment.';
+      }
+      if (!res.ok) {
+        return '⚠️ AI is unavailable right now. You can still take the quiz.';
+      }
 
       const data = await res.json();
       return (
-        data.choices?.[0]?.message?.content ||
+        data.content ||
         '⚠️ AI is unavailable right now. You can still take the quiz.'
       );
     } catch {
