@@ -39,7 +39,7 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-[260px] bg-[#131B2E] border-r border-white/5 flex flex-col z-50 transition-transform duration-300 ${
+        className={`fixed left-0 top-0 h-dvh w-[260px] bg-[#131B2E] border-r border-white/5 flex flex-col z-50 transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
