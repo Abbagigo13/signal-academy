@@ -50,56 +50,24 @@ export default function ComparePanel() {
         return;
       }
 
-      const apiKey = process.env.NEXT_PUBLIC_QWEN_API_KEY;
-      if (!apiKey) {
-        setError('Qwen API key missing.');
+      const response = await fetch('/api/compare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assetA, assetB, dataA, dataB }),
+      });
+
+      if (response.status === 429) {
+        setError('Too many requests. Please wait a moment.');
         setLoading(false);
         return;
       }
 
-      const prompt = `Compare these two assets side-by-side for a trader:
-
-ASSET A: ${assetA}
-${JSON.stringify(dataA, null, 2)}
-
-ASSET B: ${assetB}
-${JSON.stringify(dataB, null, 2)}
-
-Provide:
-1. **Head-to-Head** — which is trending better and why
-2. **Correlation** — are they moving together, diverging, or uncorrelated?
-3. **Risk/Reward** — which offers a better setup right now?
-4. **Concrete Trade Idea** — one specific trade (long one, short the other, or wait)
-
-Use markdown formatting. Keep it under 250 words. Be direct and actionable.`;
-
-      const response = await fetch(
-        'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'qwen-plus',
-            messages: [
-              {
-                role: 'system',
-                content:
-                  'You are a senior cross-asset analyst. Compare assets objectively and give actionable trade ideas.',
-              },
-              { role: 'user', content: prompt },
-            ],
-          }),
-        }
-      );
-
       const data = await response.json();
-      if (data.choices?.[0]?.message?.content) {
-        setResult(data.choices[0].message.content);
+      if (data.content) {
+        setResult(data.content);
       } else {
         setError('AI returned an unexpected response.');
+      }
       }
     } catch (err) {
       console.error(err);
