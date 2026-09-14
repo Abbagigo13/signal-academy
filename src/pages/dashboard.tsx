@@ -62,7 +62,7 @@ export default function Dashboard() {
         <title>Dashboard · Signal Academy</title>
       </Head>
 
-      <div className="flex min-h-screen bg-[#0A0E1A] text-white">
+            <div className="flex min-h-dvh bg-[#0A0E1A] text-white">
         <Sidebar
           currentView={view}
           onNavigate={setView}
