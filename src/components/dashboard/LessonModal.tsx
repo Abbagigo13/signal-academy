@@ -136,7 +136,7 @@ export default function LessonModal({ lesson, onClose, onComplete }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="bg-[#131B2E] border border-white/10 w-full sm:max-w-2xl h-[95vh] sm:h-auto sm:max-h-[90vh] rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col">
+            <div className="bg-[#131B2E] border border-white/10 w-full sm:max-w-2xl h-[95dvh] sm:h-auto sm:max-h-[90dvh] rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-5 lg:px-6 py-4 border-b border-white/5 flex-shrink-0">
           <div className="flex items-center gap-3 min-w-0">
